@@ -42,7 +42,7 @@ export default function MembersPage() {
   function initials(name: string) { return name?.split(' ').map(n => n[0]).join('').toUpperCase() || '?'; }
 
   return (
-    <div style={{ height: '100%', overflow: 'auto', background: '#f0f4fa', fontFamily: 'var(--font-sans)' }}>
+    <div style={{ height: '100%', overflow: 'auto', background: '#f1f5f9', fontFamily: 'var(--font-sans)' }}>
       <style>{`
         .member-card { display:flex; align-items:center; gap:12px; padding:14px 16px; background:white; borderRadius:12px; border:1px solid rgba(0,0,0,0.08); transition:border-color 0.15s; }
         .member-card:hover { border-color: rgba(0,0,0,0.16); }
@@ -56,12 +56,12 @@ export default function MembersPage() {
 
       {/* Header */}
       <div className="members-header" style={{ background: 'white', borderBottom: '1px solid rgba(0,0,0,0.08)', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 5 }}>
-        <h2 style={{ color: '#0d1b35', fontSize: '15px', fontWeight: 700, margin: 0 }}>
+        <h2 style={{ color: '#1e293b', fontSize: '15px', fontWeight: 700, margin: 0 }}>
           Team Members <span style={{ color: '#94a3b8', fontWeight: 400 }}>({members.length})</span>
         </h2>
         {isPM && (
           <button onClick={() => setShowAdd(true)}
-            style={{ height: '34px', padding: '0 14px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '6px', background: 'linear-gradient(135deg,#F5C400,#e6b800)', color: '#060e1c', fontWeight: 700, fontSize: '12px', border: 'none', cursor: 'pointer' }}>
+            style={{ height: '34px', padding: '0 14px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '6px', background: 'linear-gradient(135deg,#14b8a6,#0d9488)', color: '#0f172a', fontWeight: 700, fontSize: '12px', border: 'none', cursor: 'pointer' }}>
             <UserPlus size={14} /> Add Member
           </button>
         )}
@@ -91,7 +91,7 @@ export default function MembersPage() {
 
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', marginBottom: '2px' }}>
-                  <span style={{ color: '#0d1b35', fontWeight: 600, fontSize: '14px' }}>{member.user?.name}</span>
+                  <span style={{ color: '#1e293b', fontWeight: 600, fontSize: '14px' }}>{member.user?.name}</span>
                   {isOwner && (
                     <span style={{ display: 'flex', alignItems: 'center', gap: '3px', fontSize: '10px', fontWeight: 700, color: '#d97706', background: '#fef3c7', border: '1px solid #fde68a', borderRadius: '20px', padding: '2px 7px' }}>
                       <Crown size={10} /> Owner
@@ -130,7 +130,7 @@ export default function MembersPage() {
           <div onClick={e => e.stopPropagation()}
             style={{ width: '100%', maxWidth: '440px', background: 'white', borderRadius: '16px', padding: '24px', border: '1px solid rgba(0,0,0,0.08)', boxShadow: '0 30px 80px rgba(0,0,0,0.2)', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-              <h2 style={{ color: '#0d1b35', fontSize: '16px', fontWeight: 700, margin: 0 }}>Add team member</h2>
+              <h2 style={{ color: '#1e293b', fontSize: '16px', fontWeight: 700, margin: 0 }}>Add team member</h2>
               <button onClick={() => setShowAdd(false)}
                 style={{ width: '28px', height: '28px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: '1px solid rgba(0,0,0,0.08)', cursor: 'pointer', color: '#94a3b8' }}>
                 <X size={14} />
@@ -148,11 +148,11 @@ export default function MembersPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ color: '#0d1b35', fontWeight: 600, fontSize: '13px', margin: '0 0 2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{u.name}</p>
+                    <p style={{ color: '#1e293b', fontWeight: 600, fontSize: '13px', margin: '0 0 2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{u.name}</p>
                     <p style={{ color: '#94a3b8', fontSize: '11px', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{u.email} · {u.role}</p>
                   </div>
                   <button onClick={() => handleAdd(u.id)} disabled={adding === u.id}
-                    style={{ height: '30px', padding: '0 14px', borderRadius: '8px', background: adding === u.id ? 'rgba(245,196,0,0.4)' : 'linear-gradient(135deg,#F5C400,#e6b800)', color: '#060e1c', fontWeight: 700, fontSize: '12px', border: 'none', cursor: 'pointer', flexShrink: 0 }}>
+                    style={{ height: '30px', padding: '0 14px', borderRadius: '8px', background: adding === u.id ? 'rgba(20,184,166,0.4)' : 'linear-gradient(135deg,#14b8a6,#0d9488)', color: '#0f172a', fontWeight: 700, fontSize: '12px', border: 'none', cursor: 'pointer', flexShrink: 0 }}>
                     {adding === u.id ? '...' : 'Add'}
                   </button>
                 </div>

@@ -69,11 +69,11 @@ export default function SprintsPage() {
   const inputStyle: React.CSSProperties = {
     width: '100%', height: '42px', borderRadius: '8px', padding: '0 12px',
     fontSize: '14px', border: '1px solid rgba(0,0,0,0.12)', background: '#f8fafc',
-    color: '#0d1b35', outline: 'none', boxSizing: 'border-box',
+    color: '#1e293b', outline: 'none', boxSizing: 'border-box',
   };
 
   return (
-    <div style={{ height: '100%', overflow: 'auto', background: '#f0f4fa', fontFamily: 'var(--font-sans)' }}>
+    <div style={{ height: '100%', overflow: 'auto', background: '#f1f5f9', fontFamily: 'var(--font-sans)' }}>
       <style>{`
         @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
         .mo { position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,0.5); }
@@ -95,10 +95,10 @@ export default function SprintsPage() {
 
       {/* Header */}
       <div className="sprint-header" style={{ background: 'white', borderBottom: '1px solid rgba(0,0,0,0.08)', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 5 }}>
-        <h2 style={{ color: '#0d1b35', fontSize: '15px', fontWeight: 700, margin: 0 }}>Sprints</h2>
+        <h2 style={{ color: '#1e293b', fontSize: '15px', fontWeight: 700, margin: 0 }}>Sprints</h2>
         {isPM && (
           <button onClick={() => { setShowModal(true); setEditSprint(null); setForm({ name: '', startDate: '', endDate: '' }); }}
-            style={{ height: '34px', padding: '0 14px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '6px', background: 'linear-gradient(135deg,#F5C400,#e6b800)', color: '#060e1c', fontWeight: 700, fontSize: '12px', border: 'none', cursor: 'pointer' }}>
+            style={{ height: '34px', padding: '0 14px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '6px', background: 'linear-gradient(135deg,#14b8a6,#0d9488)', color: '#0f172a', fontWeight: 700, fontSize: '12px', border: 'none', cursor: 'pointer' }}>
             <Plus size={14} /> New Sprint
           </button>
         )}
@@ -128,7 +128,7 @@ export default function SprintsPage() {
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px', marginBottom: '10px' }}>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '4px' }}>
-                      <h3 style={{ color: '#0d1b35', fontWeight: 700, fontSize: '15px', margin: 0 }}>{sprint.name}</h3>
+                      <h3 style={{ color: '#1e293b', fontWeight: 700, fontSize: '15px', margin: 0 }}>{sprint.name}</h3>
                       <span style={{ fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '20px', letterSpacing: '0.06em', textTransform: 'uppercase' as const, flexShrink: 0, ...Object.fromEntries(statusColors[sprint.status].split(';').filter(Boolean).map(s => { const [k, v] = s.split(':'); return [k.trim().replace(/-([a-z])/g, (_, l) => l.toUpperCase()), v.trim()]; })) }}>
                         {sprint.status}
                       </span>
@@ -146,7 +146,7 @@ export default function SprintsPage() {
                   {/* Action buttons */}
                   <div className="sprint-actions" style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
                     <button onClick={() => setChartSprint(chartSprint?.id === sprint.id ? null : sprint)}
-                      style={{ height: '28px', padding: '0 8px', borderRadius: '8px', fontSize: '11px', fontWeight: 600, background: chartSprint?.id === sprint.id ? 'rgba(245,196,0,0.1)' : '#f1f5f9', border: chartSprint?.id === sprint.id ? '1px solid rgba(245,196,0,0.4)' : '1px solid rgba(0,0,0,0.08)', color: chartSprint?.id === sprint.id ? '#c98500' : '#64748b', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                      style={{ height: '28px', padding: '0 8px', borderRadius: '8px', fontSize: '11px', fontWeight: 600, background: chartSprint?.id === sprint.id ? 'rgba(20,184,166,0.1)' : '#f1f5f9', border: chartSprint?.id === sprint.id ? '1px solid rgba(20,184,166,0.4)' : '1px solid rgba(0,0,0,0.08)', color: chartSprint?.id === sprint.id ? '#0f766e' : '#64748b', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px' }}>
                       <BarChart2 size={12} />
                     </button>
                     {isPM && sprint.status !== 'ACTIVE' && (
@@ -182,7 +182,7 @@ export default function SprintsPage() {
                   {totalPoints > 0 && <span style={{ color: '#64748b', fontSize: '12px' }}>{donePoints}/{totalPoints} pts</span>}
                 </div>
                 <div style={{ height: '6px', borderRadius: '3px', background: '#f1f5f9', overflow: 'hidden' }}>
-                  <div style={{ height: '100%', width: `${Math.min(100, progress)}%`, background: 'linear-gradient(90deg,#F5C400,#e6b800)', borderRadius: '3px', transition: 'width 0.4s ease' }} />
+                  <div style={{ height: '100%', width: `${Math.min(100, progress)}%`, background: 'linear-gradient(90deg,#14b8a6,#0d9488)', borderRadius: '3px', transition: 'width 0.4s ease' }} />
                 </div>
               </div>
 
@@ -227,16 +227,16 @@ export default function SprintsPage() {
 
                 {isPM && tasks.filter(t => !t.sprintId).length > 0 && (
                   <details style={{ marginTop: '8px' }}>
-                    <summary style={{ color: '#F5C400', fontSize: '12px', cursor: 'pointer', fontWeight: 600, padding: '6px 0', userSelect: 'none' as const }}>
+                    <summary style={{ color: '#14b8a6', fontSize: '12px', cursor: 'pointer', fontWeight: 600, padding: '6px 0', userSelect: 'none' as const }}>
                       + Add tasks from backlog ({tasks.filter(t => !t.sprintId).length} available)
                     </summary>
-                    <div style={{ marginTop: '8px', maxHeight: '200px', overflowY: 'auto', border: '1px solid rgba(245,196,0,0.3)', borderRadius: '10px', padding: '8px', background: 'rgba(245,196,0,0.04)' }}>
+                    <div style={{ marginTop: '8px', maxHeight: '200px', overflowY: 'auto', border: '1px solid rgba(20,184,166,0.3)', borderRadius: '10px', padding: '8px', background: 'rgba(20,184,166,0.04)' }}>
                       {tasks.filter(t => !t.sprintId).map(t => (
                         <div key={t.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 8px', borderRadius: '8px' }}>
                           <span style={{ fontSize: '13px', color: '#1e293b', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{t.title}</span>
                           <PriorityBadge priority={t.priority} />
                           <button onClick={() => handleMoveTask(t.id, sprint.id)}
-                            style={{ fontSize: '11px', fontWeight: 700, color: '#060e1c', background: 'linear-gradient(135deg,#F5C400,#e6b800)', border: 'none', borderRadius: '6px', padding: '3px 10px', cursor: 'pointer', flexShrink: 0 }}>
+                            style={{ fontSize: '11px', fontWeight: 700, color: '#0f172a', background: 'linear-gradient(135deg,#14b8a6,#0d9488)', border: 'none', borderRadius: '6px', padding: '3px 10px', cursor: 'pointer', flexShrink: 0 }}>
                             + Add
                           </button>
                         </div>
@@ -254,7 +254,7 @@ export default function SprintsPage() {
       {showModal && (
         <div className="mo" onClick={() => { setShowModal(false); setEditSprint(null); }}>
           <div onClick={e => e.stopPropagation()} style={{ width: '100%', maxWidth: '420px', background: 'white', borderRadius: '16px', padding: '24px', border: '1px solid rgba(0,0,0,0.08)', boxShadow: '0 30px 80px rgba(0,0,0,0.2)' }}>
-            <h2 style={{ color: '#0d1b35', fontSize: '17px', fontWeight: 700, margin: '0 0 20px' }}>
+            <h2 style={{ color: '#1e293b', fontSize: '17px', fontWeight: 700, margin: '0 0 20px' }}>
               {editSprint ? 'Edit Sprint' : 'New Sprint'}
             </h2>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
@@ -278,7 +278,7 @@ export default function SprintsPage() {
                   Cancel
                 </button>
                 <button type="submit" disabled={saving || !form.name.trim()}
-                  style={{ height: '40px', padding: '0 20px', borderRadius: '8px', background: saving || !form.name.trim() ? 'rgba(245,196,0,0.4)' : 'linear-gradient(135deg,#F5C400,#e6b800)', color: '#060e1c', fontSize: '13px', fontWeight: 700, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  style={{ height: '40px', padding: '0 20px', borderRadius: '8px', background: saving || !form.name.trim() ? 'rgba(20,184,166,0.4)' : 'linear-gradient(135deg,#14b8a6,#0d9488)', color: '#0f172a', fontSize: '13px', fontWeight: 700, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
                   {saving ? <Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} /> : null}
                   {editSprint ? 'Save' : 'Create'}
                 </button>
@@ -307,7 +307,7 @@ function BurndownChart({ sprint, sprintTasks, columns }: { sprint: Sprint; sprin
   const maxCount = Math.max(...colData.map(d => d.count), 1);
 
   const colColors: Record<string, string> = {
-    'Backlog': '#94a3b8', 'Sprint Ready': '#3b82f6', 'In Progress': '#F5C400',
+    'Backlog': '#94a3b8', 'Sprint Ready': '#3b82f6', 'In Progress': '#14b8a6',
     'Review': '#8b5cf6', 'QA': '#f97316', 'Done': '#22c55e',
   };
 
@@ -334,7 +334,7 @@ function BurndownChart({ sprint, sprintTasks, columns }: { sprint: Sprint; sprin
             <div style={{ position: 'relative', width: '52px', height: '52px', flexShrink: 0 }}>
               <svg width="52" height="52" viewBox="0 0 52 52">
                 <circle cx="26" cy="26" r="20" fill="none" stroke="#f1f5f9" strokeWidth="6" />
-                <circle cx="26" cy="26" r="20" fill="none" stroke="#F5C400" strokeWidth="6"
+                <circle cx="26" cy="26" r="20" fill="none" stroke="#14b8a6" strokeWidth="6"
                   strokeDasharray={`${2 * Math.PI * 20}`}
                   strokeDashoffset={`${2 * Math.PI * 20 * (1 - (totalTasks > 0 ? doneTasks / totalTasks : 0))}`}
                   strokeLinecap="round" transform="rotate(-90 26 26)"
@@ -342,13 +342,13 @@ function BurndownChart({ sprint, sprintTasks, columns }: { sprint: Sprint; sprin
                 />
               </svg>
               <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ fontSize: '11px', fontWeight: 800, color: '#0d1b35' }}>
+                <span style={{ fontSize: '11px', fontWeight: 800, color: '#1e293b' }}>
                   {totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0}%
                 </span>
               </div>
             </div>
             <div>
-              <p style={{ color: '#0d1b35', fontWeight: 700, fontSize: '12px', margin: '0 0 2px' }}>Completion</p>
+              <p style={{ color: '#1e293b', fontWeight: 700, fontSize: '12px', margin: '0 0 2px' }}>Completion</p>
               <p style={{ color: '#64748b', fontSize: '11px', margin: 0 }}>{doneTasks} of {totalTasks} done</p>
             </div>
           </div>

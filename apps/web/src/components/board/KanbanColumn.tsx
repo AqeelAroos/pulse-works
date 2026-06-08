@@ -54,7 +54,7 @@ export function KanbanColumn({ column, tasks, boardId, isPM, onTaskClick, isDrag
   }
 
   const columnColors: Record<string, string> = {
-    'Backlog': '#64748b', 'Sprint Ready': '#3b82f6', 'In Progress': '#F5C400',
+    'Backlog': '#64748b', 'Sprint Ready': '#3b82f6', 'In Progress': '#14b8a6',
     'Review': '#8b5cf6', 'QA': '#f97316', 'Done': '#22c55e',
   };
   const dotColor = columnColors[column.name] || '#64748b';
@@ -75,7 +75,7 @@ export function KanbanColumn({ column, tasks, boardId, isPM, onTaskClick, isDrag
           <div style={{ width: '9px', height: '9px', borderRadius: '50%', background: dotColor, flexShrink: 0 }} />
           {editing ? (
             <input
-              style={{ fontSize: '13px', fontWeight: 600, background: 'white', border: '1px solid #F5C400', borderRadius: '6px', padding: '2px 8px', color: '#0d1b35', outline: 'none', flex: 1, minWidth: 0 }}
+              style={{ fontSize: '13px', fontWeight: 600, background: 'white', border: '1px solid #14b8a6', borderRadius: '6px', padding: '2px 8px', color: '#1e293b', outline: 'none', flex: 1, minWidth: 0 }}
               value={editName}
               onChange={e => setEditName(e.target.value)}
               onBlur={handleRename}
@@ -121,7 +121,7 @@ export function KanbanColumn({ column, tasks, boardId, isPM, onTaskClick, isDrag
 
       {/* Drop zone */}
       <div ref={setDropRef}
-        style={{ flex: 1, minHeight: '180px', borderRadius: '12px', padding: '8px', display: 'flex', flexDirection: 'column', gap: '8px', background: isOver ? 'rgba(234,163,0,0.06)' : '#f1f5f9', border: isOver ? '2px dashed #F5C400' : '1px solid rgba(0,0,0,0.06)', transition: 'all 0.15s' }}>
+        style={{ flex: 1, minHeight: '180px', borderRadius: '12px', padding: '8px', display: 'flex', flexDirection: 'column', gap: '8px', background: isOver ? 'rgba(20,184,166,0.06)' : '#f1f5f9', border: isOver ? '2px dashed #14b8a6' : '1px solid rgba(0,0,0,0.06)', transition: 'all 0.15s' }}>
         <SortableContext items={tasks.map(t => t.id)} strategy={verticalListSortingStrategy}>
           {tasks.map(task => (
             <TaskCard key={task.id} task={task} onClick={() => onTaskClick(task)} />

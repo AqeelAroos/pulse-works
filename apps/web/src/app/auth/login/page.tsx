@@ -26,128 +26,47 @@ export default function LoginPage() {
     resize();
     window.addEventListener('resize', resize);
 
-    const stars = Array.from({ length: 250 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      r: Math.random() * 1.6 + 0.2,
-      alpha: Math.random() * 0.8 + 0.2,
-      speed: Math.random() * 0.02 + 0.005,
-      dir: Math.random() > 0.5 ? 1 : -1,
-    }));
-
-    const meteors: {
-      x: number; y: number; len: number; speed: number;
-      alpha: number; active: boolean; timer: number;
-    }[] = Array.from({ length: 8 }, (_, i) => ({
-      x: 0, y: 0, len: Math.random() * 150 + 80,
-      speed: Math.random() * 10 + 7,
-      alpha: 0, active: false,
-      timer: i * 60 + Math.random() * 120,
-    }));
-
-    function resetMeteor(m: typeof meteors[0]) {
-  if (!canvas) return;
-  m.x = Math.random() * canvas.width * 0.7;
-  m.y = Math.random() * canvas.height * 0.4;
-  m.alpha = 1;
-  m.active = true;
-  m.len = Math.random() * 150 + 80;
-  m.speed = Math.random() * 10 + 7;
-  m.timer = Math.random() * 400 + 200;
-}
+    const blobs = [
+      { x: 0.2, y: 0.3, vx: 0.0003, vy: 0.0002, r: 0.38, color: [20, 184, 166] as [number,number,number] },
+      { x: 0.8, y: 0.7, vx: -0.0002, vy: 0.0003, r: 0.42, color: [99, 102, 241] as [number,number,number] },
+      { x: 0.5, y: 0.1, vx: 0.0001, vy: 0.0004, r: 0.32, color: [16, 185, 129] as [number,number,number] },
+      { x: 0.1, y: 0.85, vx: 0.0004, vy: -0.0003, r: 0.28, color: [139, 92, 246] as [number,number,number] },
+      { x: 0.9, y: 0.2, vx: -0.0003, vy: 0.0002, r: 0.33, color: [6, 182, 212] as [number,number,number] },
+    ];
 
     let raf: number;
 
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Deep space background
-      const bg = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      bg.addColorStop(0, '#000812');
-      bg.addColorStop(0.5, '#010d20');
-      bg.addColorStop(1, '#000510');
-      ctx.fillStyle = bg;
+      ctx.fillStyle = '#080c18';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Nebula 1 - blue
-      const n1 = ctx.createRadialGradient(
-        canvas.width * 0.25, canvas.height * 0.35, 0,
-        canvas.width * 0.25, canvas.height * 0.35, 280
-      );
-      n1.addColorStop(0, 'rgba(20,60,140,0.22)');
-      n1.addColorStop(0.5, 'rgba(10,30,80,0.1)');
-      n1.addColorStop(1, 'transparent');
-      ctx.fillStyle = n1;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = 'rgba(255,255,255,0.025)';
+      ctx.lineWidth = 1;
+      const g = 64;
+      for (let x = 0; x < canvas.width; x += g) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += g) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
 
-      // Nebula 2 - purple
-      const n2 = ctx.createRadialGradient(
-        canvas.width * 0.75, canvas.height * 0.65, 0,
-        canvas.width * 0.75, canvas.height * 0.65, 220
-      );
-      n2.addColorStop(0, 'rgba(70,20,100,0.18)');
-      n2.addColorStop(1, 'transparent');
-      ctx.fillStyle = n2;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      blobs.forEach(b => {
+        b.x += b.vx;
+        b.y += b.vy;
+        if (b.x < 0 || b.x > 1) b.vx *= -1;
+        if (b.y < 0 || b.y > 1) b.vy *= -1;
 
-      // Nebula 3 - subtle gold hint
-      const n3 = ctx.createRadialGradient(
-        canvas.width * 0.5, canvas.height * 0.5, 0,
-        canvas.width * 0.5, canvas.height * 0.5, 350
-      );
-      n3.addColorStop(0, 'rgba(180,130,0,0.04)');
-      n3.addColorStop(1, 'transparent');
-      ctx.fillStyle = n3;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Stars
-      stars.forEach(s => {
-        s.alpha += s.speed * s.dir;
-        if (s.alpha >= 1) { s.alpha = 1; s.dir = -1; }
-        if (s.alpha <= 0.1) { s.alpha = 0.1; s.dir = 1; }
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
-        ctx.fill();
-      });
-
-      // Meteors
-      meteors.forEach(m => {
-        if (!m.active) {
-          m.timer--;
-          if (m.timer <= 0) resetMeteor(m);
-          return;
-        }
-        m.x += m.speed;
-        m.y += m.speed * 0.45;
-        m.alpha -= 0.015;
-        if (m.alpha <= 0 || m.x > canvas.width + 100 || m.y > canvas.height + 100) {
-          m.active = false;
-          m.timer = Math.random() * 400 + 150;
-          return;
-        }
-        const tail = ctx.createLinearGradient(
-          m.x - m.len, m.y - m.len * 0.45,
-          m.x, m.y
-        );
-        tail.addColorStop(0, 'transparent');
-        tail.addColorStop(0.6, `rgba(160,200,255,${m.alpha * 0.3})`);
-        tail.addColorStop(1, `rgba(255,255,255,${m.alpha})`);
-        ctx.beginPath();
-        ctx.moveTo(m.x - m.len, m.y - m.len * 0.45);
-        ctx.lineTo(m.x, m.y);
-        ctx.strokeStyle = tail;
-        ctx.lineWidth = 1.8;
-        ctx.stroke();
-
-        // Head glow
-        const glow = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, 6);
-        glow.addColorStop(0, `rgba(255,255,255,${m.alpha})`);
-        glow.addColorStop(1, 'transparent');
-        ctx.fillStyle = glow;
-        ctx.beginPath();
-        ctx.arc(m.x, m.y, 6, 0, Math.PI * 2);
-        ctx.fill();
+        const cx = b.x * canvas.width;
+        const cy = b.y * canvas.height;
+        const radius = b.r * Math.min(canvas.width, canvas.height);
+        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+        grad.addColorStop(0, `rgba(${b.color[0]},${b.color[1]},${b.color[2]},0.18)`);
+        grad.addColorStop(0.5, `rgba(${b.color[0]},${b.color[1]},${b.color[2]},0.07)`);
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
       });
 
       raf = requestAnimationFrame(draw);
@@ -196,15 +115,15 @@ export default function LoginPage() {
         }
         .auth-input::placeholder { color: rgba(255,255,255,0.2); }
         .auth-input:focus {
-          border-color: rgba(234,163,0,0.5);
+          border-color: rgba(20,184,166,0.5);
           background: rgba(255,255,255,0.09);
-          box-shadow: 0 0 0 3px rgba(234,163,0,0.08);
+          box-shadow: 0 0 0 3px rgba(20,184,166,0.08);
         }
         .auth-submit {
           width: 100%;
           height: 50px;
-          background: linear-gradient(135deg, #F5C400 0%, #e6b800 100%);
-          color: #060e1c;
+          background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+          color: white;
           font-size: 14px;
           font-weight: 800;
           letter-spacing: 0.08em;
@@ -215,18 +134,16 @@ export default function LoginPage() {
           text-transform: uppercase;
         }
         .auth-submit:hover {
-          background: linear-gradient(135deg, #f5b800 0%, #d99200 100%);
+          background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
           transform: translateY(-1px);
-          box-shadow: 0 8px 28px rgba(234,163,0,0.35);
+          box-shadow: 0 8px 28px rgba(20,184,166,0.35);
         }
         .auth-submit:active { transform: translateY(0); }
         .auth-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
       `}</style>
 
-      {/* Full screen canvas */}
       <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
 
-      {/* Center content */}
       <div style={{
         position: 'absolute', inset: 0,
         display: 'flex', flexDirection: 'column',
@@ -234,38 +151,37 @@ export default function LoginPage() {
         padding: '20px',
       }}>
 
-        {/* Glass card */}
         <div style={{
           width: '100%',
           maxWidth: '400px',
-          background: 'rgba(5,14,35,0.55)',
+          background: 'rgba(8,12,24,0.6)',
           backdropFilter: 'blur(28px)',
           WebkitBackdropFilter: 'blur(28px)',
-          border: '1px solid rgba(255,255,255,0.1)',
+          border: '1px solid rgba(255,255,255,0.08)',
           borderRadius: '20px',
           padding: '44px 40px',
-          boxShadow: '0 30px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08)',
+          boxShadow: '0 30px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06)',
           animation: 'fadeUp 0.7s ease both',
         }}>
 
           {/* Logo */}
           <div style={{ marginBottom: '36px', textAlign: 'center' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0', marginBottom: '6px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '6px' }}>
               <span style={{
                 color: 'white',
                 fontWeight: 800,
                 fontSize: '20px',
                 letterSpacing: '0.12em',
                 textTransform: 'uppercase',
-              }}>OUTERSPACE</span>
+              }}>AGILE</span>
               <span style={{
-                color: '#F5C400',
+                color: '#14b8a6',
                 fontWeight: 800,
                 fontSize: '20px',
                 letterSpacing: '0.12em',
                 textTransform: 'uppercase',
                 marginLeft: '6px',
-              }}>DIGITAL</span>
+              }}>DESK</span>
             </div>
             <p style={{
               color: 'rgba(255,255,255,0.25)',
@@ -276,7 +192,6 @@ export default function LoginPage() {
             }}>Project Management</p>
           </div>
 
-          {/* Heading */}
           <h1 style={{
             color: 'white',
             fontSize: '24px',
@@ -304,7 +219,7 @@ export default function LoginPage() {
               <input
                 className="auth-input"
                 type="email"
-                placeholder="you@outerspace.dev"
+                placeholder="you@agiledesk.io"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
@@ -356,13 +271,12 @@ export default function LoginPage() {
             marginBottom: 0,
           }}>
             No account?{' '}
-            <Link href="/auth/register" style={{ color: 'rgba(255,255,255,0.6)', fontWeight: 600, textDecoration: 'none' }}>
+            <Link href="/auth/register" style={{ color: '#14b8a6', fontWeight: 600, textDecoration: 'none' }}>
               Create one
             </Link>
           </p>
         </div>
 
-        {/* Bottom tagline */}
         <p style={{
           color: 'rgba(255,255,255,0.15)',
           fontSize: '11px',
@@ -371,7 +285,7 @@ export default function LoginPage() {
           marginTop: '28px',
           textAlign: 'center',
         }}>
-          Let's Talk Digital. No Spacesuits Required.
+          Plan. Execute. Deliver.
         </p>
       </div>
     </div>

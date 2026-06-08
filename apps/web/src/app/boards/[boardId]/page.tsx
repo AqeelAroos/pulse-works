@@ -231,7 +231,7 @@ export default function BoardPage() {
         .ks::-webkit-scrollbar { height: 6px; }
         .ks::-webkit-scrollbar-thumb { background: ${t.border}; border-radius: 3px; }
         .filter-select { height: 34px; border-radius: 8px; padding: 0 10px; font-size: 12px; border: 1px solid ${t.border}; background: ${t.surface}; color: ${t.text}; outline: none; cursor: pointer; }
-        .filter-select:focus { border-color: #F5C400; }
+        .filter-select:focus { border-color: #14b8a6; }
       `}</style>
 
       {/* Search & Filter Bar */}
@@ -244,7 +244,7 @@ export default function BoardPage() {
             value={search}
             onChange={e => setSearch(e.target.value)}
             style={{ width: '100%', height: '34px', borderRadius: '8px', padding: '0 32px 0 32px', fontSize: '13px', background: t.inputBg, border: `1px solid ${t.border}`, color: t.inputText, outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s' }}
-            onFocus={e => (e.target.style.borderColor = '#F5C400')}
+            onFocus={e => (e.target.style.borderColor = '#14b8a6')}
             onBlur={e => (e.target.style.borderColor = t.border)}
           />
           {search && (
@@ -259,7 +259,7 @@ export default function BoardPage() {
           onClick={() => setShowFilters(!showFilters)}
           style={{ height: '34px', padding: '0 12px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.15s', background: showFilters ? t.goldBg : 'transparent', border: `1px solid ${showFilters ? t.goldBorder : t.border}`, color: showFilters ? t.gold : t.textMuted }}
         >
-          <Filter size={13} /> Filters {hasActiveFilters && <span style={{ background: t.gold, color: '#060e1c', borderRadius: '10px', padding: '0 6px', fontSize: '10px', fontWeight: 800 }}>ON</span>}
+          <Filter size={13} /> Filters {hasActiveFilters && <span style={{ background: t.gold, color: '#0f172a', borderRadius: '10px', padding: '0 6px', fontSize: '10px', fontWeight: 800 }}>ON</span>}
         </button>
 
         {/* Filter dropdowns */}
@@ -338,7 +338,7 @@ export default function BoardPage() {
                     <input placeholder="Column name..." value={newColName} onChange={e => setNewColName(e.target.value)} autoFocus
                       style={{ height: '38px', borderRadius: '8px', padding: '0 12px', fontSize: '13px', background: t.inputBg, border: `1px solid ${t.inputBorder}`, color: t.inputText, outline: 'none' }} />
                     <div style={{ display: 'flex', gap: '8px' }}>
-                      <button type="submit" disabled={!newColName.trim()} style={{ flex: 1, height: '34px', borderRadius: '8px', background: 'linear-gradient(135deg,#F5C400,#e6b800)', color: '#060e1c', fontWeight: 700, fontSize: '12px', border: 'none', cursor: 'pointer' }}>Add</button>
+                      <button type="submit" disabled={!newColName.trim()} style={{ flex: 1, height: '34px', borderRadius: '8px', background: 'linear-gradient(135deg,#14b8a6,#0d9488)', color: '#0f172a', fontWeight: 700, fontSize: '12px', border: 'none', cursor: 'pointer' }}>Add</button>
                       <button type="button" onClick={() => { setAddingCol(false); setNewColName(''); }} style={{ flex: 1, height: '34px', borderRadius: '8px', background: 'transparent', border: `1px solid ${t.border}`, color: t.textMuted, fontSize: '12px', cursor: 'pointer' }}>Cancel</button>
                     </div>
                   </form>
@@ -392,7 +392,7 @@ function PresenceIndicators({ boardId, currentUserId, members, t }: {
           const name = member?.user?.name || 'User';
           const initials = name.split(' ').map((n: string) => n[0]).join('').toUpperCase();
           return (
-            <div key={userId} title={`${name} is viewing`} style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'linear-gradient(135deg,#F5C400,#e6b800)', border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#060e1c', fontSize: '10px', fontWeight: 800, marginLeft: '-4px', position: 'relative' }}>
+            <div key={userId} title={`${name} is viewing`} style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'linear-gradient(135deg,#14b8a6,#0d9488)', border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0f172a', fontSize: '10px', fontWeight: 800, marginLeft: '-4px', position: 'relative' }}>
               {initials}
               <div style={{ position: 'absolute', bottom: '0', right: '0', width: '8px', height: '8px', borderRadius: '50%', background: '#22c55e', border: '1.5px solid white' }} />
             </div>

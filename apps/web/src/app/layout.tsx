@@ -6,8 +6,8 @@ import { Toaster } from '@/components/ui/toaster';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'KanbanFlow – OuterSpace Digital',
-  description: 'Real-time project management for OuterSpace Digital',
+  title: 'KanbanFlow – AgileDesk',
+  description: 'Real-time project management by AgileDesk',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

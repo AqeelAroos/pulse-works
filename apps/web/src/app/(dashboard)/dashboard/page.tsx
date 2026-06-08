@@ -66,7 +66,7 @@ export default function DashboardPage() {
 
   const accentColors = [
     { from: '#6366f1', to: '#4f46e5' },
-    { from: '#F5C400', to: '#e6b800' },
+    { from: '#14b8a6', to: '#0d9488' },
     { from: '#10b981', to: '#059669' },
     { from: '#f43f5e', to: '#e11d48' },
     { from: '#3b82f6', to: '#2563eb' },
@@ -76,12 +76,12 @@ export default function DashboardPage() {
   const inputStyle: React.CSSProperties = {
     width: '100%', height: '44px', borderRadius: '10px', padding: '0 14px',
     fontSize: '14px', outline: 'none', boxSizing: 'border-box',
-    background: '#f8fafc', border: '1px solid rgba(0,0,0,0.12)', color: '#0d1b35',
+    background: '#f8fafc', border: '1px solid rgba(0,0,0,0.12)', color: '#1e293b',
     transition: 'border-color 0.2s',
   };
 
   return (
-    <div style={{ minHeight: '100%', background: '#f0f4fa', fontFamily: 'var(--font-sans)', overflow: 'auto' }}>
+    <div style={{ minHeight: '100%', background: '#f1f5f9', fontFamily: 'var(--font-sans)', overflow: 'auto' }}>
       <style>{`
         @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
         @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
@@ -89,7 +89,7 @@ export default function DashboardPage() {
         .board-card:hover { transform: translateY(-3px); }
         .board-card:hover .card-actions { opacity: 1 !important; }
         .mo { position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,0.5); }
-        .dash-input:focus { border-color: rgba(234,163,0,0.6) !important; box-shadow: 0 0 0 3px rgba(234,163,0,0.1) !important; outline: none; }
+        .dash-input:focus { border-color: rgba(20,184,166,0.6) !important; box-shadow: 0 0 0 3px rgba(20,184,166,0.1) !important; outline: none; }
         @media (max-width: 480px) {
           .dash-grid { grid-template-columns: 1fr !important; }
         }
@@ -98,10 +98,10 @@ export default function DashboardPage() {
       {/* Content */}
       <div style={{ padding: 'clamp(16px, 4vw, 32px)', animation: 'fadeUp 0.5s ease both' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
-          <h1 style={{ color: '#0d1b35', fontSize: '20px', fontWeight: 700, margin: 0 }}>My Boards</h1>
+          <h1 style={{ color: '#1e293b', fontSize: '20px', fontWeight: 700, margin: 0 }}>My Boards</h1>
           {isPM && (
             <button onClick={() => setShowCreate(true)}
-              style={{ height: '34px', padding: '0 14px', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '6px', background: 'linear-gradient(135deg,#F5C400,#e6b800)', color: '#060e1c', fontWeight: 700, fontSize: '12px', border: 'none', cursor: 'pointer', flexShrink: 0 }}>
+              style={{ height: '34px', padding: '0 14px', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '6px', background: 'linear-gradient(135deg,#14b8a6,#0d9488)', color: '#0f172a', fontWeight: 700, fontSize: '12px', border: 'none', cursor: 'pointer', flexShrink: 0 }}>
               <Plus size={14} /> New Board
             </button>
           )}
@@ -110,20 +110,20 @@ export default function DashboardPage() {
 
         {isLoading ? (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '200px' }}>
-            <Loader2 size={28} style={{ color: '#F5C400', animation: 'spin 1s linear infinite' }} />
+            <Loader2 size={28} style={{ color: '#14b8a6', animation: 'spin 1s linear infinite' }} />
           </div>
         ) : boards.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '80px 20px' }}>
-            <div style={{ width: '60px', height: '60px', borderRadius: '14px', background: 'rgba(234,163,0,0.08)', border: '1px solid rgba(234,163,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
-              <Kanban size={26} style={{ color: '#F5C400' }} />
+            <div style={{ width: '60px', height: '60px', borderRadius: '14px', background: 'rgba(20,184,166,0.08)', border: '1px solid rgba(20,184,166,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+              <Kanban size={26} style={{ color: '#14b8a6' }} />
             </div>
-            <h3 style={{ color: '#0d1b35', fontSize: '17px', fontWeight: 600, margin: '0 0 8px' }}>No boards yet</h3>
+            <h3 style={{ color: '#1e293b', fontSize: '17px', fontWeight: 600, margin: '0 0 8px' }}>No boards yet</h3>
             <p style={{ color: '#64748b', fontSize: '14px', margin: '0 0 20px', maxWidth: '300px', marginLeft: 'auto', marginRight: 'auto' }}>
               {isPM ? 'Create your first board to start managing projects.' : "You haven't been added to any boards yet."}
             </p>
             {isPM && (
               <button onClick={() => setShowCreate(true)}
-                style={{ height: '42px', padding: '0 22px', borderRadius: '10px', background: 'linear-gradient(135deg,#F5C400,#e6b800)', color: '#060e1c', fontWeight: 700, fontSize: '14px', border: 'none', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                style={{ height: '42px', padding: '0 22px', borderRadius: '10px', background: 'linear-gradient(135deg,#14b8a6,#0d9488)', color: '#0f172a', fontWeight: 700, fontSize: '14px', border: 'none', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                 <Plus size={16} /> Create your first board
               </button>
             )}
@@ -138,7 +138,7 @@ export default function DashboardPage() {
                 <div key={board.id} className="board-card"
                   onClick={() => router.push(`/boards/${board.id}`)}
                   style={{ background: 'white', borderRadius: '14px', border: '1px solid rgba(0,0,0,0.08)', boxShadow: '0 2px 16px rgba(0,0,0,0.06)', overflow: 'hidden', cursor: 'pointer' }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(234,163,0,0.5)'; (e.currentTarget as HTMLDivElement).style.boxShadow = '0 6px 28px rgba(0,0,0,0.1)'; }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(20,184,166,0.5)'; (e.currentTarget as HTMLDivElement).style.boxShadow = '0 6px 28px rgba(0,0,0,0.1)'; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(0,0,0,0.08)'; (e.currentTarget as HTMLDivElement).style.boxShadow = '0 2px 16px rgba(0,0,0,0.06)'; }}
                 >
                   <div style={{ height: '3px', background: `linear-gradient(90deg,${accent.from},${accent.to})` }} />
@@ -151,7 +151,7 @@ export default function DashboardPage() {
                         <div className="card-actions" style={{ display: 'flex', gap: '4px', opacity: 0, transition: 'opacity 0.15s' }}>
                           <button onClick={e => openEdit(e, board)}
                             style={{ width: '28px', height: '28px', borderRadius: '7px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: '1px solid rgba(0,0,0,0.08)', cursor: 'pointer', color: '#94a3b8', transition: 'all 0.15s' }}
-                            onMouseEnter={e => { e.currentTarget.style.color = '#F5C400'; e.currentTarget.style.borderColor = 'rgba(234,163,0,0.4)'; }}
+                            onMouseEnter={e => { e.currentTarget.style.color = '#14b8a6'; e.currentTarget.style.borderColor = 'rgba(20,184,166,0.4)'; }}
                             onMouseLeave={e => { e.currentTarget.style.color = '#94a3b8'; e.currentTarget.style.borderColor = 'rgba(0,0,0,0.08)'; }}>
                             <Pencil size={11} />
                           </button>
@@ -164,7 +164,7 @@ export default function DashboardPage() {
                         </div>
                       )}
                     </div>
-                    <h3 style={{ color: '#0d1b35', fontWeight: 700, fontSize: '14px', margin: '0 0 4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{board.name}</h3>
+                    <h3 style={{ color: '#1e293b', fontWeight: 700, fontSize: '14px', margin: '0 0 4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{board.name}</h3>
                     {board.description && <p style={{ color: '#64748b', fontSize: '12px', margin: '0 0 12px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{board.description}</p>}
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: board.description ? '0' : '12px' }}>
                       <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#94a3b8', fontSize: '11px' }}>
@@ -179,11 +179,11 @@ export default function DashboardPage() {
 
             {isPM && (
               <button onClick={() => setShowCreate(true)}
-                style={{ minHeight: '152px', borderRadius: '14px', border: '2px dashed rgba(234,163,0,0.3)', background: 'rgba(234,163,0,0.04)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '10px', cursor: 'pointer', transition: 'all 0.2s', color: '#F5C400' }}
-                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#F5C400'; (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-3px)'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(234,163,0,0.3)'; (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)'; }}>
-                <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'rgba(234,163,0,0.1)', border: '1px solid rgba(234,163,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Plus size={18} color="#F5C400" />
+                style={{ minHeight: '152px', borderRadius: '14px', border: '2px dashed rgba(20,184,166,0.3)', background: 'rgba(20,184,166,0.04)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '10px', cursor: 'pointer', transition: 'all 0.2s', color: '#14b8a6' }}
+                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#14b8a6'; (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-3px)'; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(20,184,166,0.3)'; (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)'; }}>
+                <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'rgba(20,184,166,0.1)', border: '1px solid rgba(20,184,166,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Plus size={18} color="#14b8a6" />
                 </div>
                 <span style={{ fontSize: '13px', fontWeight: 600 }}>New Board</span>
               </button>
@@ -196,7 +196,7 @@ export default function DashboardPage() {
       {showCreate && (
         <div className="mo" onClick={() => setShowCreate(false)}>
           <div onClick={e => e.stopPropagation()} style={{ width: '100%', maxWidth: '440px', background: 'white', borderRadius: '16px', padding: '28px', border: '1px solid rgba(0,0,0,0.08)', boxShadow: '0 30px 80px rgba(0,0,0,0.2)' }}>
-            <h2 style={{ color: '#0d1b35', fontSize: '18px', fontWeight: 700, margin: '0 0 6px' }}>Create new board</h2>
+            <h2 style={{ color: '#1e293b', fontSize: '18px', fontWeight: 700, margin: '0 0 6px' }}>Create new board</h2>
             <p style={{ color: '#64748b', fontSize: '13px', margin: '0 0 24px' }}>Set up a new project workspace for your team</p>
             <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
@@ -209,7 +209,7 @@ export default function DashboardPage() {
               </div>
               <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '4px' }}>
                 <button type="button" onClick={() => setShowCreate(false)} style={{ height: '42px', padding: '0 18px', borderRadius: '10px', background: 'transparent', border: '1px solid rgba(0,0,0,0.12)', color: '#64748b', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}>Cancel</button>
-                <button type="submit" disabled={creating || !newName.trim()} style={{ height: '42px', padding: '0 22px', borderRadius: '10px', background: creating || !newName.trim() ? 'rgba(234,163,0,0.4)' : 'linear-gradient(135deg,#F5C400,#e6b800)', color: '#060e1c', fontWeight: 700, fontSize: '13px', border: 'none', cursor: creating || !newName.trim() ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <button type="submit" disabled={creating || !newName.trim()} style={{ height: '42px', padding: '0 22px', borderRadius: '10px', background: creating || !newName.trim() ? 'rgba(20,184,166,0.4)' : 'linear-gradient(135deg,#14b8a6,#0d9488)', color: '#0f172a', fontWeight: 700, fontSize: '13px', border: 'none', cursor: creating || !newName.trim() ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
                   {creating ? <Loader2 size={14} style={{ animation: 'spin 1s linear infinite' }} /> : null}{creating ? 'Creating...' : 'Create Board'}
                 </button>
               </div>
@@ -222,7 +222,7 @@ export default function DashboardPage() {
       {showEdit && editingBoard && (
         <div className="mo" onClick={() => { setShowEdit(false); setEditingBoard(null); }}>
           <div onClick={e => e.stopPropagation()} style={{ width: '100%', maxWidth: '440px', background: 'white', borderRadius: '16px', padding: '28px', border: '1px solid rgba(0,0,0,0.08)', boxShadow: '0 30px 80px rgba(0,0,0,0.2)' }}>
-            <h2 style={{ color: '#0d1b35', fontSize: '18px', fontWeight: 700, margin: '0 0 6px' }}>Rename board</h2>
+            <h2 style={{ color: '#1e293b', fontSize: '18px', fontWeight: 700, margin: '0 0 6px' }}>Rename board</h2>
             <p style={{ color: '#64748b', fontSize: '13px', margin: '0 0 24px' }}>Update the name and description</p>
             <form onSubmit={handleUpdate} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
@@ -235,7 +235,7 @@ export default function DashboardPage() {
               </div>
               <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '4px' }}>
                 <button type="button" onClick={() => { setShowEdit(false); setEditingBoard(null); }} style={{ height: '42px', padding: '0 18px', borderRadius: '10px', background: 'transparent', border: '1px solid rgba(0,0,0,0.12)', color: '#64748b', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}>Cancel</button>
-                <button type="submit" disabled={saving || !editName.trim()} style={{ height: '42px', padding: '0 22px', borderRadius: '10px', background: saving || !editName.trim() ? 'rgba(234,163,0,0.4)' : 'linear-gradient(135deg,#F5C400,#e6b800)', color: '#060e1c', fontWeight: 700, fontSize: '13px', border: 'none', cursor: saving || !editName.trim() ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <button type="submit" disabled={saving || !editName.trim()} style={{ height: '42px', padding: '0 22px', borderRadius: '10px', background: saving || !editName.trim() ? 'rgba(20,184,166,0.4)' : 'linear-gradient(135deg,#14b8a6,#0d9488)', color: '#0f172a', fontWeight: 700, fontSize: '13px', border: 'none', cursor: saving || !editName.trim() ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
                   {saving ? <Loader2 size={14} style={{ animation: 'spin 1s linear infinite' }} /> : null}{saving ? 'Saving...' : 'Save Changes'}
                 </button>
               </div>

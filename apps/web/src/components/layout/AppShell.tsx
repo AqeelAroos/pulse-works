@@ -25,8 +25,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {/* Logo */}
       <div style={{ padding: '20px 18px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexWrap: 'wrap' }}>
-          <span style={{ color: 'white', fontWeight: 800, fontSize: '12px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>OUTERSPACE</span>
-          <span style={{ color: '#F5C400', fontWeight: 800, fontSize: '12px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>DIGITAL</span>
+          <span style={{ color: 'white', fontWeight: 800, fontSize: '12px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>AGILE</span>
+          <span style={{ color: '#14b8a6', fontWeight: 800, fontSize: '12px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>DESK</span>
         </div>
         <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '10px', margin: '3px 0 0', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Project Management</p>
       </div>
@@ -37,9 +37,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           display: 'flex', alignItems: 'center', gap: '10px',
           padding: '8px 10px', borderRadius: '8px', fontSize: '13px', fontWeight: 500,
           textDecoration: 'none', transition: 'all 0.15s',
-          background: pathname === '/dashboard' ? 'rgba(245,196,0,0.15)' : 'transparent',
-          border: pathname === '/dashboard' ? '1px solid rgba(245,196,0,0.3)' : '1px solid transparent',
-          color: pathname === '/dashboard' ? '#F5C400' : 'rgba(255,255,255,0.45)',
+          background: pathname === '/dashboard' ? 'rgba(20,184,166,0.15)' : 'transparent',
+          border: pathname === '/dashboard' ? '1px solid rgba(20,184,166,0.3)' : '1px solid transparent',
+          color: pathname === '/dashboard' ? '#14b8a6' : 'rgba(255,255,255,0.45)',
         }}>
           <LayoutDashboard size={15} /> Dashboard
         </Link>
@@ -48,7 +48,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {/* User footer */}
       <div style={{ padding: '12px 10px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 10px', borderRadius: '8px' }}>
-          <div style={{ width: '30px', height: '30px', borderRadius: '50%', flexShrink: 0, background: 'linear-gradient(135deg,#F5C400,#e6b800)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#060e1c', fontSize: '11px', fontWeight: 800 }}>
+          <div style={{ width: '30px', height: '30px', borderRadius: '50%', flexShrink: 0, background: 'linear-gradient(135deg,#14b8a6,#0d9488)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '11px', fontWeight: 800 }}>
             {initials}
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
@@ -68,7 +68,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <div style={{ display: 'flex', height: '100vh', background: '#f0f4fa', fontFamily: 'var(--font-sans)' }}>
+    <div style={{ display: 'flex', height: '100vh', background: '#f1f5f9', fontFamily: 'var(--font-sans)' }}>
       <style>{`
         @media (max-width: 768px) {
           .desktop-sidebar { display: none !important; }
@@ -82,15 +82,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       `}</style>
 
       {/* Desktop sidebar */}
-      <aside className="desktop-sidebar" style={{ width: '220px', flexShrink: 0, background: '#0d1b35', borderRight: '1px solid rgba(255,255,255,0.06)', flexDirection: 'column' }}>
+      <aside className="desktop-sidebar" style={{ width: '220px', flexShrink: 0, background: '#0f172a', borderRight: '1px solid rgba(255,255,255,0.06)', flexDirection: 'column' }}>
         <SidebarContent />
       </aside>
 
       {/* Mobile top bar */}
-      <div className="mobile-topbar" style={{ display: 'none', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 40, background: '#0d1b35', padding: '12px 16px', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+      <div className="mobile-topbar" style={{ display: 'none', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 40, background: '#0f172a', padding: '12px 16px', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span style={{ color: 'white', fontWeight: 800, fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>OUTERSPACE</span>
-          <span style={{ color: '#F5C400', fontWeight: 800, fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>DIGITAL</span>
+          <span style={{ color: 'white', fontWeight: 800, fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>AGILE</span>
+          <span style={{ color: '#14b8a6', fontWeight: 800, fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>DESK</span>
         </div>
         <button onClick={() => setMobileOpen(!mobileOpen)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'white', display: 'flex', alignItems: 'center', padding: '4px' }}>
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -103,7 +103,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {/* Backdrop */}
           <div onClick={() => setMobileOpen(false)} style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)' }} />
           {/* Drawer */}
-          <aside style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: '260px', background: '#0d1b35', display: 'flex', flexDirection: 'column', zIndex: 51 }}>
+          <aside style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: '260px', background: '#0f172a', display: 'flex', flexDirection: 'column', zIndex: 51 }}>
             <SidebarContent />
           </aside>
         </div>
@@ -111,7 +111,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       {/* Main content */}
       <main style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column', paddingTop: 0 }}>
-        {/* Push content down on mobile to avoid topbar overlap */}
         <style dangerouslySetInnerHTML={{ __html: `
   @media (max-width: 768px) {
     main > * { padding-top: 52px; }

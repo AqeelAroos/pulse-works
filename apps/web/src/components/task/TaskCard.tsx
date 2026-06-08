@@ -33,11 +33,11 @@ export function TaskCard({ task, onClick, isDragOverlay }: TaskCardProps) {
         transform: CSS.Transform.toString(transform),
         transition: isDragOverlay ? 'none' : transition,
         background: 'white',
-        border: `1px solid ${isDragOverlay ? '#F5C400' : 'rgba(0,0,0,0.08)'}`,
+        border: `1px solid ${isDragOverlay ? '#14b8a6' : 'rgba(0,0,0,0.08)'}`,
         borderRadius: '10px',
         opacity: isDragging ? 0.4 : 1,
         boxShadow: isDragOverlay
-          ? '0 20px 40px rgba(0,0,0,0.15), 0 0 0 2px #F5C400'
+          ? '0 20px 40px rgba(0,0,0,0.15), 0 0 0 2px #14b8a6'
           : '0 1px 4px rgba(0,0,0,0.06)',
         cursor: isDragging ? 'grabbing' : 'grab',
         userSelect: 'none',
@@ -46,7 +46,7 @@ export function TaskCard({ task, onClick, isDragOverlay }: TaskCardProps) {
       {...listeners}
       onMouseEnter={e => {
         if (!isDragging && !isDragOverlay) {
-          (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(245,196,0,0.4)';
+          (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(20,184,166,0.4)';
           (e.currentTarget as HTMLDivElement).style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)';
         }
       }}
@@ -66,7 +66,7 @@ export function TaskCard({ task, onClick, isDragOverlay }: TaskCardProps) {
           {(task.labels || []).length > 0 && (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '6px' }}>
               {task.labels.map(label => (
-                <span key={label} style={{ padding: '1px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: 600, background: 'rgba(245,196,0,0.08)', color: '#c98500', border: '1px solid rgba(245,196,0,0.2)' }}>
+                <span key={label} style={{ padding: '1px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: 600, background: 'rgba(20,184,166,0.08)', color: '#0f766e', border: '1px solid rgba(20,184,166,0.2)' }}>
                   {label}
                 </span>
               ))}
@@ -108,7 +108,7 @@ export function TaskCard({ task, onClick, isDragOverlay }: TaskCardProps) {
             {(task.assignees || []).length > 0 && (
               <div style={{ display: 'flex' }}>
                 {(task.assignees || []).slice(0, 3).map((a: any) => (
-                  <div key={a.id} style={{ width: '20px', height: '20px', borderRadius: '50%', background: 'linear-gradient(135deg,#F5C400,#e6b800)', border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#060e1c', fontSize: '8px', fontWeight: 800, marginLeft: '-4px' }}>
+                  <div key={a.id} style={{ width: '20px', height: '20px', borderRadius: '50%', background: 'linear-gradient(135deg,#14b8a6,#0d9488)', border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0f172a', fontSize: '8px', fontWeight: 800, marginLeft: '-4px' }}>
                     {initials(a.user?.name || '')}
                   </div>
                 ))}

@@ -45,15 +45,15 @@ export default function BoardLayout({ children }: { children: React.ReactNode })
           <div className="board-header-inner" style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 0 0' }}>
             <Link href="/dashboard"
               style={{ color: '#94a3b8', display: 'flex', alignItems: 'center', textDecoration: 'none', transition: 'color 0.15s', flexShrink: 0 }}
-              onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.color = '#F5C400')}
+              onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.color = '#14b8a6')}
               onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.color = '#94a3b8')}>
               <ArrowLeft size={16} />
             </Link>
             {isLoading && !currentBoard
-              ? <Loader2 size={14} style={{ color: '#F5C400', animation: 'spin 1s linear infinite' }} />
+              ? <Loader2 size={14} style={{ color: '#14b8a6', animation: 'spin 1s linear infinite' }} />
               : (
                 <div style={{ minWidth: 0 }}>
-                  <h1 className="board-title" style={{ color: '#0d1b35', fontSize: '15px', fontWeight: 700, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <h1 className="board-title" style={{ color: '#1e293b', fontSize: '15px', fontWeight: 700, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {currentBoard?.name}
                   </h1>
                   {currentBoard?.description && (
@@ -76,11 +76,11 @@ export default function BoardLayout({ children }: { children: React.ReactNode })
                   href={tab.href}
                   className="board-tab"
                   style={{
-                    borderBottomColor: isActive ? '#F5C400' : 'transparent',
-                    color: isActive ? '#F5C400' : '#64748b',
+                    borderBottomColor: isActive ? '#14b8a6' : 'transparent',
+                    color: isActive ? '#14b8a6' : '#64748b',
                     fontWeight: isActive ? 600 : 400,
                   }}
-                  onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLAnchorElement).style.color = '#0d1b35'; }}
+                  onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLAnchorElement).style.color = '#1e293b'; }}
                   onMouseLeave={e => { if (!isActive) (e.currentTarget as HTMLAnchorElement).style.color = '#64748b'; }}
                 >
                   {tab.icon}{tab.label}

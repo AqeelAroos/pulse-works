@@ -27,7 +27,7 @@ async function main() {
   // ─── Users ──────────────────────────────────────────────────────────────────
   const pm = await prisma.user.create({
     data: {
-      email: 'lubna@outerspace.dev',
+      email: 'lubna@agiledesk.io',
       password: lubnaPassword,
       name: 'Lubna Jiffry',
       role: Role.PM,
@@ -36,7 +36,7 @@ async function main() {
 
   const atheek = await prisma.user.create({
     data: {
-      email: 'atheek@outerspace.dev',
+      email: 'atheek@agiledesk.io',
       password: hashedPassword,
       name: 'Atheek',
       role: Role.ENGINEER,
@@ -45,7 +45,7 @@ async function main() {
 
   const sarah = await prisma.user.create({
     data: {
-      email: 'sarah@outerspace.dev',
+      email: 'sarah@agiledesk.io',
       password: hashedPassword,
       name: 'Sarah',
       role: Role.ENGINEER,
@@ -54,7 +54,7 @@ async function main() {
 
   const ahmad = await prisma.user.create({
     data: {
-      email: 'ahmad@outerspace.dev',
+      email: 'ahmad@agiledesk.io',
       password: hashedPassword,
       name: 'Ahmad',
       role: Role.ENGINEER,
@@ -64,8 +64,8 @@ async function main() {
   // ─── Board ──────────────────────────────────────────────────────────────────
   const board = await prisma.board.create({
     data: {
-      name: 'OuterSpace Digital',
-      description: 'Main product board for OuterSpace Digital',
+      name: 'AgileDesk',
+      description: 'Main product board for AgileDesk',
       ownerId: pm.id,
     },
   });
@@ -408,10 +408,10 @@ async function main() {
   console.log('✅ Seed complete!');
   console.log('');
   console.log('Demo accounts:');
-  console.log('  PM:       lubna@outerspace.dev   / 123456');
-  console.log('  Engineer: atheek@outerspace.dev  / password123');
-  console.log('  Engineer: sarah@outerspace.dev   / password123');
-  console.log('  Engineer: ahmad@outerspace.dev   / password123');
+  console.log('  PM:       lubna@agiledesk.io   / 123456');
+  console.log('  Engineer: atheek@agiledesk.io  / password123');
+  console.log('  Engineer: sarah@agiledesk.io   / password123');
+  console.log('  Engineer: ahmad@agiledesk.io   / password123');
 }
 
 main()
