@@ -22,7 +22,7 @@ async function start() {
   });
 
   await app.register(cors, {
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: true,
     credentials: true,
   });
 
@@ -32,7 +32,7 @@ async function start() {
 
   const io = new Server({
     cors: {
-      origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+      origin: true,
       credentials: true,
       methods: ['GET', 'POST'],
     },
@@ -79,7 +79,6 @@ async function start() {
     socket.on('join:board', (boardId: string) => {
       socket.join(boardId);
       app.log.info(`${user?.name} joined board room: ${boardId}`);
-      // Broadcast presence update to everyone in the room
       setTimeout(() => {
         io.to(boardId).emit('presence:update', { onlineUsers: getOnlineUsers(boardId) });
       }, 100);
@@ -94,7 +93,6 @@ async function start() {
 
     socket.on('disconnect', () => {
       app.log.info(`Socket disconnected: ${user?.name}`);
-      // Broadcast presence update to all rooms this socket was in
       socket.rooms.forEach(roomId => {
         if (roomId !== socket.id) {
           setTimeout(() => {
