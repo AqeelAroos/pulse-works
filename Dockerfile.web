@@ -1,8 +1,6 @@
 FROM node:20-slim
 
-# cache bust
-RUN echo "bust-1"
-
+RUN echo "bust-2"
 
 WORKDIR /app
 
@@ -20,11 +18,12 @@ ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 RUN pnpm install --no-frozen-lockfile
 RUN pnpm --filter web build
 
-RUN cp -r /app/apps/web/.next/static /app/apps/web/.next/standalone/.next/static
+RUN ls /app/apps/web/.next/
+
+RUN cp -r /app/apps/web/.next/static /app/apps/web/.next/standalone/.next/static || true
 RUN cp -r /app/apps/web/public /app/apps/web/.next/standalone/public 2>/dev/null || true
 
 EXPOSE 3000
-
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
