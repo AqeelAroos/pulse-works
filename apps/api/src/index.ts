@@ -18,7 +18,7 @@ declare module 'fastify' {
 
 async function start() {
   const app = Fastify({
-    logger: { level: process.env.NODE_ENV === 'production' ? 'warn' : 'info' },
+    logger: { level: 'info' },
   });
 
   await app.register(cors, {
