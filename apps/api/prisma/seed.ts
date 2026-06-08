@@ -44,6 +44,16 @@ async function main() {
     },
   });
 
+  const ummaPassword = await bcrypt.hash('umma123', 10);
+  const umma = await prisma.user.create({
+    data: {
+      email: 'umma@gmail.com',
+      password: ummaPassword,
+      name: 'Umma',
+      role: Role.PM,
+    },
+  });
+
   const atheek = await prisma.user.create({
     data: {
       email: 'atheek@agiledesk.io',
@@ -716,11 +726,263 @@ async function main() {
     { meetingId: aMeeting2.id, userId: sarah.id },
   ]});
 
+  // ─── UMMA'S BOARD ───────────────────────────────────────────────────────────
+
+  const ummaBoard = await prisma.board.create({
+    data: {
+      name: 'Healthcare Portal',
+      description: 'Patient management, appointments, and billing system',
+      ownerId: umma.id,
+    },
+  });
+
+  await prisma.boardMember.createMany({
+    data: [
+      { boardId: ummaBoard.id, userId: umma.id },
+      { boardId: ummaBoard.id, userId: atheek.id },
+      { boardId: ummaBoard.id, userId: sarah.id },
+      { boardId: ummaBoard.id, userId: ahmad.id },
+    ],
+  });
+
+  const uCols = await Promise.all([
+    prisma.column.create({ data: { name: 'Backlog',      order: 0, boardId: ummaBoard.id } }),
+    prisma.column.create({ data: { name: 'Sprint Ready', order: 1, boardId: ummaBoard.id } }),
+    prisma.column.create({ data: { name: 'In Progress',  order: 2, boardId: ummaBoard.id } }),
+    prisma.column.create({ data: { name: 'Review',       order: 3, boardId: ummaBoard.id } }),
+    prisma.column.create({ data: { name: 'QA',           order: 4, boardId: ummaBoard.id } }),
+    prisma.column.create({ data: { name: 'Done',         order: 5, boardId: ummaBoard.id } }),
+  ]);
+  const [uBacklog, uSprintReady, uInProgress, uReview, uQA, uDone] = uCols;
+
+  const uSprint = await prisma.sprint.create({
+    data: {
+      name: 'Sprint 1 – Core Features',
+      boardId: ummaBoard.id,
+      status: SprintStatus.ACTIVE,
+      startDate: new Date(),
+      endDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+    },
+  });
+
+  await prisma.sprint.create({
+    data: {
+      name: 'Sprint 2 – Polish',
+      boardId: ummaBoard.id,
+      status: SprintStatus.PLANNED,
+      startDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
+      endDate:   new Date(Date.now() + 29 * 24 * 60 * 60 * 1000),
+    },
+  });
+
+  // Task U1 – Atheek: Patient registration API (In Progress)
+  const tu1 = await prisma.task.create({
+    data: {
+      title: 'Patient registration & profile API',
+      description: 'CRUD endpoints for patient profiles: personal info, medical history, insurance details.',
+      priority: Priority.HIGH, labels: ['backend', 'api'], storyPoints: 5,
+      columnId: uInProgress.id, boardId: ummaBoard.id, sprintId: uSprint.id, order: 0,
+      dueDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000),
+    },
+  });
+  await prisma.taskAssignee.create({ data: { taskId: tu1.id, userId: atheek.id } });
+  await prisma.subtask.createMany({ data: [
+    { title: 'Design patient schema',           completed: true,  taskId: tu1.id },
+    { title: 'Build create & update endpoints', completed: true,  taskId: tu1.id },
+    { title: 'Add input validation',            completed: false, taskId: tu1.id },
+    { title: 'Write API docs',                  completed: false, taskId: tu1.id },
+  ]});
+  await prisma.comment.createMany({ data: [
+    { content: 'Schema is done, validation next.', taskId: tu1.id, authorId: atheek.id },
+    { content: 'Great start! Remember HIPAA-safe field handling.', taskId: tu1.id, authorId: umma.id },
+  ]});
+  await prisma.activityLog.createMany({ data: [
+    { action: 'Task created',         taskId: tu1.id, userId: umma.id },
+    { action: 'Moved to In Progress', taskId: tu1.id, userId: atheek.id },
+  ]});
+
+  // Task U2 – Sarah: Appointment scheduling UI (In Progress)
+  const tu2 = await prisma.task.create({
+    data: {
+      title: 'Appointment scheduling UI',
+      description: 'Calendar view for doctors and patients to book, reschedule and cancel appointments.',
+      priority: Priority.HIGH, labels: ['frontend', 'ui'], storyPoints: 6,
+      columnId: uInProgress.id, boardId: ummaBoard.id, sprintId: uSprint.id, order: 1,
+      dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+    },
+  });
+  await prisma.taskAssignee.create({ data: { taskId: tu2.id, userId: sarah.id } });
+  await prisma.subtask.createMany({ data: [
+    { title: 'Calendar component',         completed: true,  taskId: tu2.id },
+    { title: 'Time slot picker',           completed: true,  taskId: tu2.id },
+    { title: 'Reschedule / cancel flow',   completed: false, taskId: tu2.id },
+    { title: 'Connect to appointment API', completed: false, taskId: tu2.id },
+  ]});
+  await prisma.comment.createMany({ data: [
+    { content: 'Calendar and time slot picker are live. Working on reschedule flow.', taskId: tu2.id, authorId: sarah.id },
+    { content: 'Looking good! Make sure cancellation sends a notification.', taskId: tu2.id, authorId: umma.id },
+  ]});
+  await prisma.activityLog.createMany({ data: [
+    { action: 'Task created',         taskId: tu2.id, userId: umma.id },
+    { action: 'Moved to In Progress', taskId: tu2.id, userId: sarah.id },
+  ]});
+
+  // Task U3 – Atheek + Sarah: Billing module (Sprint Ready)
+  const tu3 = await prisma.task.create({
+    data: {
+      title: 'Billing and invoice module',
+      description: 'Generate invoices per appointment, integrate with payment gateway, send PDF receipts by email.',
+      priority: Priority.CRITICAL, labels: ['backend', 'frontend', 'payments'], storyPoints: 8,
+      columnId: uSprintReady.id, boardId: ummaBoard.id, sprintId: uSprint.id, order: 0,
+      dueDate: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000),
+    },
+  });
+  await prisma.taskAssignee.createMany({ data: [
+    { taskId: tu3.id, userId: atheek.id },
+    { taskId: tu3.id, userId: sarah.id },
+  ]});
+  await prisma.subtask.createMany({ data: [
+    { title: 'Invoice generation API',      completed: false, taskId: tu3.id },
+    { title: 'Payment gateway integration', completed: false, taskId: tu3.id },
+    { title: 'PDF receipt generation',      completed: false, taskId: tu3.id },
+    { title: 'Email delivery of receipts',  completed: false, taskId: tu3.id },
+    { title: 'Billing UI page',             completed: false, taskId: tu3.id },
+  ]});
+  await prisma.comment.create({ data: { content: 'Top priority — flag me if you hit any blockers.', taskId: tu3.id, authorId: umma.id } });
+  await prisma.activityLog.create({ data: { action: 'Task created', taskId: tu3.id, userId: umma.id } });
+
+  // Task U4 – Ahmad: Doctor dashboard (Review)
+  const tu4 = await prisma.task.create({
+    data: {
+      title: 'Doctor dashboard',
+      description: "Protected portal showing today's appointments, patient queue, and quick access to patient records.",
+      priority: Priority.MEDIUM, labels: ['frontend', 'ui'], storyPoints: 6,
+      columnId: uReview.id, boardId: ummaBoard.id, sprintId: uSprint.id, order: 0,
+      dueDate: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000),
+    },
+  });
+  await prisma.taskAssignee.create({ data: { taskId: tu4.id, userId: ahmad.id } });
+  await prisma.subtask.createMany({ data: [
+    { title: 'Appointment list for today', completed: true,  taskId: tu4.id },
+    { title: 'Patient quick-view panel',   completed: true,  taskId: tu4.id },
+    { title: 'Stats summary cards',        completed: true,  taskId: tu4.id },
+    { title: 'Mobile responsive layout',   completed: false, taskId: tu4.id },
+  ]});
+  await prisma.comment.createMany({ data: [
+    { content: 'Core views done. Making it responsive before submitting for review.', taskId: tu4.id, authorId: ahmad.id },
+    { content: 'Prioritise the mobile layout — doctors use tablets.', taskId: tu4.id, authorId: umma.id },
+  ]});
+  await prisma.activityLog.createMany({ data: [
+    { action: 'Task created',    taskId: tu4.id, userId: umma.id },
+    { action: 'Moved to Review', taskId: tu4.id, userId: ahmad.id },
+  ]});
+
+  // Task U5 – Atheek: Auth & RBAC (QA)
+  const tu5 = await prisma.task.create({
+    data: {
+      title: 'Auth and role-based access control',
+      description: 'Login/register for patients, doctors, and admins. Role guards on all sensitive routes.',
+      priority: Priority.HIGH, labels: ['backend', 'auth'], storyPoints: 5,
+      columnId: uQA.id, boardId: ummaBoard.id, sprintId: uSprint.id, order: 0,
+      dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+    },
+  });
+  await prisma.taskAssignee.create({ data: { taskId: tu5.id, userId: atheek.id } });
+  await prisma.subtask.createMany({ data: [
+    { title: 'Auth endpoints',          completed: true,  taskId: tu5.id },
+    { title: 'JWT middleware',          completed: true,  taskId: tu5.id },
+    { title: 'Role guards',             completed: true,  taskId: tu5.id },
+    { title: 'Auth integration tests',  completed: false, taskId: tu5.id },
+  ]});
+  await prisma.comment.createMany({ data: [
+    { content: 'Auth and guards are solid. Running integration tests now.', taskId: tu5.id, authorId: atheek.id },
+    { content: 'Great! Ping me once tests pass and we can merge.', taskId: tu5.id, authorId: umma.id },
+  ]});
+  await prisma.activityLog.createMany({ data: [
+    { action: 'Task created', taskId: tu5.id, userId: umma.id },
+    { action: 'Moved to QA',  taskId: tu5.id, userId: atheek.id },
+  ]});
+
+  // Task U6 – Ahmad: Notification service (Done)
+  const tu6 = await prisma.task.create({
+    data: {
+      title: 'Email and SMS notification service',
+      description: 'Automated reminders for appointments, cancellations, and billing events via email and SMS.',
+      priority: Priority.MEDIUM, labels: ['backend', 'notifications'], storyPoints: 4,
+      columnId: uDone.id, boardId: ummaBoard.id, sprintId: uSprint.id, order: 0,
+    },
+  });
+  await prisma.taskAssignee.create({ data: { taskId: tu6.id, userId: ahmad.id } });
+  await prisma.subtask.createMany({ data: [
+    { title: 'Email service integration',    completed: true, taskId: tu6.id },
+    { title: 'SMS gateway integration',      completed: true, taskId: tu6.id },
+    { title: 'Appointment reminder trigger', completed: true, taskId: tu6.id },
+    { title: 'Billing event trigger',        completed: true, taskId: tu6.id },
+  ]});
+  await prisma.comment.createMany({ data: [
+    { content: 'All triggers live and tested. Email and SMS confirmed working.', taskId: tu6.id, authorId: ahmad.id },
+    { content: 'Perfect execution. Marking this done!', taskId: tu6.id, authorId: umma.id },
+  ]});
+  await prisma.activityLog.createMany({ data: [
+    { action: 'Task created',  taskId: tu6.id, userId: umma.id },
+    { action: 'Moved to Done', taskId: tu6.id, userId: ahmad.id },
+  ]});
+
+  // Task U7 – Sarah: Patient self-service portal (Backlog)
+  const tu7 = await prisma.task.create({
+    data: {
+      title: 'Patient self-service portal',
+      description: 'Patients can view their history, download reports, update personal info, and manage appointments.',
+      priority: Priority.MEDIUM, labels: ['frontend', 'ui'], storyPoints: 7,
+      columnId: uBacklog.id, boardId: ummaBoard.id, order: 0,
+      dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+    },
+  });
+  await prisma.taskAssignee.create({ data: { taskId: tu7.id, userId: sarah.id } });
+  await prisma.subtask.createMany({ data: [
+    { title: 'Patient profile page',     completed: false, taskId: tu7.id },
+    { title: 'Appointment history view', completed: false, taskId: tu7.id },
+    { title: 'Report download feature',  completed: false, taskId: tu7.id },
+    { title: 'Settings & preferences',   completed: false, taskId: tu7.id },
+  ]});
+  await prisma.activityLog.create({ data: { action: 'Task created', taskId: tu7.id, userId: umma.id } });
+
+  // Meetings
+  const uMeeting1 = await prisma.meeting.create({
+    data: {
+      title: 'Sprint 1 Kickoff',
+      description: 'Align on sprint goals, assign tasks, and review the healthcare portal roadmap.',
+      scheduledAt: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+      boardId: ummaBoard.id, sprintId: uSprint.id, organizerId: umma.id,
+    },
+  });
+  await prisma.meetingParticipant.createMany({ data: [
+    { meetingId: uMeeting1.id, userId: umma.id },
+    { meetingId: uMeeting1.id, userId: atheek.id },
+    { meetingId: uMeeting1.id, userId: sarah.id },
+    { meetingId: uMeeting1.id, userId: ahmad.id },
+  ]});
+
+  const uMeeting2 = await prisma.meeting.create({
+    data: {
+      title: 'Billing Module Design Review',
+      description: 'Walk through the billing API contract and UI wireframes before development starts.',
+      scheduledAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+      boardId: ummaBoard.id, sprintId: uSprint.id, organizerId: umma.id,
+    },
+  });
+  await prisma.meetingParticipant.createMany({ data: [
+    { meetingId: uMeeting2.id, userId: umma.id },
+    { meetingId: uMeeting2.id, userId: atheek.id },
+    { meetingId: uMeeting2.id, userId: sarah.id },
+  ]});
+
   console.log('✅ Seed complete!');
   console.log('');
   console.log('Demo accounts:');
   console.log('  PM:       lubna@agiledesk.io   / 123456');
   console.log('  PM:       afdhal@gmail.com     / afdhal123');
+  console.log('  PM:       umma@gmail.com       / umma123');
   console.log('  Engineer: atheek@agiledesk.io  / password123');
   console.log('  Engineer: sarah@agiledesk.io   / password123');
   console.log('  Engineer: ahmad@agiledesk.io   / password123');
